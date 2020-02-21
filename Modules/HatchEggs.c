@@ -162,14 +162,14 @@ static uint8_t GetEgg(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 	switch (count) {
 	case 0 ... 99:
 		/* Move to breeder */
-		ReportData->LY = STICK_MAX - 20;
+		ReportData->LY = STICK_MAX - 30;
 		break;
 	case 100 ... 109:		
 		ReportData->LX = STICK_MAX;
 		break;
 	case 110 ... 159:
 		/* Move to breeder */
-		ReportData->LY = STICK_MAX - 20;
+		ReportData->LY = STICK_MAX;
 		break;	
 	case 150+20 ... 799+20:
 		/* Get egg */
