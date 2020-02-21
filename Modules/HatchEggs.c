@@ -188,7 +188,7 @@ void HatchEggs_Module(USB_JoystickReport_Input_t* const ReportData)
 	switch (state) {
 	case RESET_POSITION_1:
 		if (ResetPosition(ReportData, duration_count)) {
-			state = OPEN_POKEMON_BOX;
+			state =  HATCH_EGG;
 			duration_count = 0;
 		}
 		break;
