@@ -160,13 +160,10 @@ static uint8_t PutPokemonInBox(USB_JoystickReport_Input_t* const ReportData, uin
 static uint8_t GetEgg(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
 	switch (count) {
-	case 0 ... 99:
+	case 0 ... 149:
 		/* Move to breeder */
-		ReportData->LY = STICK_MAX - 30;
-		break;
-	case 100 ... 109:
-		/* Move to breeder */
-		ReportData->LX = STICK_MAX - 10;
+		ReportData->LY = STICK_MAX;
+		ReportData->LX = STICK_MAX;
 		break;
 	case 150 ... 799:
 		/* Get egg */
