@@ -81,7 +81,7 @@ static uint8_t OpenPokemonBox(USB_JoystickReport_Input_t* const ReportData, uint
 		break;
 	case 50 ... 74:
 		/* Move pokemon menu */
-		ReportData->HAT = HAT_TOP_RIGTH;
+		ReportData->HAT = HAT_TOP_RIGHT;
 		break;
 	case 300 ... 349:
 		/* Select pokemon menu */
