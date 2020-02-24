@@ -10,6 +10,7 @@
 #define LIMIT_EGG_COUNT		(LIMIT_BOX_NUMBER * 30)
 
 extern void HatchEggs_Module(USB_JoystickReport_Input_t* const ReportData);
+extern void HatchEggs_Module2(USB_JoystickReport_Input_t* const ReportData);
 extern void LoopTournament_Module(USB_JoystickReport_Input_t* const ReportData);
 extern void RepeatA_Module(USB_JoystickReport_Input_t* const ReportData);
 extern void ReleasePokemons_Module(USB_JoystickReport_Input_t* const ReportData);
