@@ -2,10 +2,10 @@
 #include "Modules.h"
 
 typedef enum {
-	RESET_POSITION_1,
-	HATCH_EGG,
-	RESET_POSITION_2,
-	GET_EGG,
+	moveoffice, //家から役所まで移動
+	moveATM, //入口からATMまで移動
+	getMAL, //MALを取得
+	,
 	OPEN_POKEMON_BOX,
 	PUT_POKEMON_IN_BOX,
 	DONE,
