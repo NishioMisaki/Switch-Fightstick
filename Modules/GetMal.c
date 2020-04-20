@@ -14,21 +14,24 @@ static uint16_t duration_count = 0;
 static uint8_t openatumori(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
 	switch (count) {
-	case 0 ... 29:
+	case 0 ... 49:
 		//メニュー画面に行く
-		if (count % 10 == 0)
+		if (count % 50 < 25)
 			ReportData->Button |= SWITCH_HOME;
 		break;
-	case 30 ... 69:
+	case 50 ... 99:
 		//あつもりまでいく
 		ReportData->HAT = HAT_TOP_LEFT;
 		break;
-	case 70 ... 149:
+	case 100 ... 6349:
 		//あつもりを開く
 		if (count % 10 == 0)
 			ReportData->Button |= SWITCH_A;
 		break;
-	case 150:
+	case 6350 ... 6475:
+		ReportData->LY = STICK_MIN;
+		break;
+	case 6476:
 		return 1;
 	}
 	return 0;
