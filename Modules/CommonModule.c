@@ -46,6 +46,8 @@ void GetNextReport(USB_JoystickReport_Input_t* const ReportData)
 	ReleasePokemons_Module(ReportData);
 #elif defined(LOOP_BATTLE_TOWER)
 	LoopBattleTower_Module(ReportData);
+#elif defined(GET_MAL)
+	GetMaL_Module(ReportData);
 #else
 	HatchEggs_Module(ReportData);
 #endif
