@@ -2,15 +2,15 @@
 #include "Modules.h"
 
 typedef enum {
-	OPEN_ATUMORI,
-	//GETING_MAL,
+	//OPEN_ATUMORI,
+	GETING_MAL,
 	//YEAR_UP,
 	DONE,
 } State_t;
 
-static State_t state = OPEN_ATUMORI;
+static State_t state = GETING_MAL;
 static uint16_t duration_count = 0;
-
+/*
 static uint8_t openatumori(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
 	switch (count) {
@@ -25,81 +25,70 @@ static uint8_t openatumori(USB_JoystickReport_Input_t* const ReportData, uint16_
 		break;
 	case 100 ... 6349:
 		//あつもりを開く
-		if (count % 10 == 0)
+		if (count % 50 < 25)
 			ReportData->Button |= SWITCH_A;
 		break;
-	case 6350 ... 6475:
-		ReportData->LY = STICK_MIN;
-		break;
-	case 6476:
+	case 6350:
 		return 1;
 	}
 	return 0;
 }
+*/
 
-/*
 static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
 	
 	switch (count) {
 	
 	//市役所まで移動
-	case 0 ... 199:
-		//Move down
+	case 0 ... 259:
+		//左に移動(259)
+		ReportData->LX = STICK_MIN;
+		ReportData->Button |= SWITCH_B;
+		break;
+	case 260 ... 279:
+		//上に移動+入る(19)
 		ReportData->LY = STICK_MIN;
 		break;
-	case 200 ... 599 :
-		//Move down
-		ReportData->LX = STICK_MAX;
-	case 600 ... 619:
-        //in office
-		ReportData->LY = STICK_MAX;
-		break;
-
-	//ATMの前に移動
-	case 620+1000 ... 620+1000+19:
-		//Move up
-		ReportData->LY = STICK_MAX;
-		break;
-
-	case 620+1000+20 ... 620+1000+20+99:
-		// Move left
-		ReportData->LX = STICK_MAX;
-		break;
-
-	//A連打
-	case 620+1000+20+100 ... 620 + 1000 + 20 + 100 + 599:
-		if (count % 50 < 25)
+	case 280 ... 329:
+		//Aをおす（49）
+		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
-	
-	case 620 + 1000 + 20 + 100+ 600 ... 620 + 1000 + 20 + 100 + 600 + 49:
-		if (count % 50 < 25)
-			ReportData->Button = SWITCH_B;
+	case 330 ... 1549:
+		//ロード時間(1219)	
 		break;
-
-	//セーブをする
-	case 620 + 1000 + 20 + 100 + 600 + 50 ... 620 + 1000 + 20 + 100 + 600 + 50 + 49:
-		if (count % 50 < 25)
+	case 1550 ... 1569:
+		//少し上へ(19)
+		ReportData->LY = STICK_MIN;
+		ReportData->Button |= SWITCH_B;
+		break;
+	case 1570 ... 1695:
+		//右へ(125)
+		ReportData->LX = STICK_MAX;
+		ReportData->Button |= SWITCH_B;
+		break;	
+	case 1696 ... 1745:
+		//ATMに話しかける(49)
+		if ( count % 50 < 25 )
+			ReportData->Button |= SWITCH_A;
+		break;
+	case 1746 ... 3496:
+		//Bをおす(125*13+49)
+		ReportData->Button |= SWITCH_R;
+		if ( count % 50 < 25 )
+			ReportData->Button |= SWITCH_B;
+		break;
+	case 3497 ...3546:
+		//-をおしてセーブする
+		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_SELECT;
 		break;
-
-	case 620 + 1000 + 20 + 100 + 600 + 50 + 50 ... 620 + 1000 + 20 + 100 + 600 + 50 + 50 + 699:
-		if (count % 50 < 25)
-			ReportData->Button |= SWITCH_A;
-		break;
-
-	case 620 + 1000 + 20 + 100 + 600 + 50 + 50 + 700 ... 620 + 1000 + 20 + 100 + 600 + 50 + 50 + 700 + 49: 
-	        //Open home
-		if (count % 50 < 25)
-			ReportData->Button |= SWITCH_HOME;
-		break;
-	case 620 + 1000 + 20 + 100 + 600 + 50 + 50 + 700 + 50:
+	case 3547:
 		return 1;
 	}
 	return 0;
 }
-*/
 
 /*
 static uint8_t yearup(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
@@ -177,8 +166,8 @@ static uint8_t yearup(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 void GetMal_Module(USB_JoystickReport_Input_t* const ReportData)
 {
 	switch (state) {
-	case OPEN_ATUMORI:
-		if (openatumori(ReportData, duration_count)) {
+	case GETING_MAL:
+		if (getmal(ReportData, duration_count)) {
 			state = DONE;
 			duration_count = 0;
 		}
