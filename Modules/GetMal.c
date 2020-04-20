@@ -3,8 +3,8 @@
 
 typedef enum {
 	OPEN_ATUMORI,
-	GETING_MAL,
-	YEAR_UP,
+	//GETING_MAL,
+	//YEAR_UP,
 	DONE,
 } State_t;
 
@@ -14,18 +14,18 @@ static uint16_t duration_count = 0;
 static uint8_t openatumori(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
 	switch (count) {
-	case 0 ... 49:
-		/* Open menu */
-		if (count % 50 < 25)
+	case 0 ... 29:
+		//メニュー画面に行く
+		if (count % 10 == 0)
 			ReportData->Button |= SWITCH_HOME;
 		break;
-	case 50 ... 99:
-		/* Move atumori */
+	case 30 ... 69:
+		//あつもりまでいく
 		ReportData->HAT = HAT_TOP_LEFT;
 		break;
-	case 100 ... 149:
-		/* Open menu */
-		if (count % 50 < 25)
+	case 70 ... 149:
+		//あつもりを開く
+		if (count % 10 == 0)
 			ReportData->Button |= SWITCH_A;
 		break;
 	case 150:
@@ -34,36 +34,37 @@ static uint8_t openatumori(USB_JoystickReport_Input_t* const ReportData, uint16_
 	return 0;
 }
 
+/*
 static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
 	
 	switch (count) {
 	
-	/*市役所まで移動*/
+	//市役所まで移動
 	case 0 ... 199:
-		/* Move down */
+		//Move down
 		ReportData->LY = STICK_MIN;
 		break;
 	case 200 ... 599 :
-		/* Move down */
+		//Move down
 		ReportData->LX = STICK_MAX;
 	case 600 ... 619:
-        /* in office*/
+        //in office
 		ReportData->LY = STICK_MAX;
 		break;
 
-	/* ATMの前に移動 */
+	//ATMの前に移動
 	case 620+1000 ... 620+1000+19:
-		/* Move up */
+		//Move up
 		ReportData->LY = STICK_MAX;
 		break;
 
 	case 620+1000+20 ... 620+1000+20+99:
-		/* Move left */
+		// Move left
 		ReportData->LX = STICK_MAX;
 		break;
 
-	/*A連打*/
+	//A連打
 	case 620+1000+20+100 ... 620 + 1000 + 20 + 100 + 599:
 		if (count % 50 < 25)
 			ReportData->Button |= SWITCH_A;
@@ -74,7 +75,7 @@ static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 			ReportData->Button = SWITCH_B;
 		break;
 
-	/*セーブをする*/
+	//セーブをする
 	case 620 + 1000 + 20 + 100 + 600 + 50 ... 620 + 1000 + 20 + 100 + 600 + 50 + 49:
 		if (count % 50 < 25)
 			ReportData->Button |= SWITCH_SELECT;
@@ -86,7 +87,7 @@ static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 		break;
 
 	case 620 + 1000 + 20 + 100 + 600 + 50 + 50 + 700 ... 620 + 1000 + 20 + 100 + 600 + 50 + 50 + 700 + 49: 
-	     /* Open home */
+	        //Open home
 		if (count % 50 < 25)
 			ReportData->Button |= SWITCH_HOME;
 		break;
@@ -95,11 +96,13 @@ static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 	}
 	return 0;
 }
+*/
 
+/*
 static uint8_t yearup(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
 	switch (count) {
-	/*設定まで移動*/
+	//設定まで移動
 	case 0 ... 49:
 		if (count % 50 < 25)
 			ReportData->HAT = HAT_BOTTOM;
@@ -115,7 +118,7 @@ static uint8_t yearup(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 		break;
 
 	case 250 ... 349:
-		/*本体設定まで移動*/
+		//本体設定まで移動
 		ReportData->LY = STICK_MIN;
 		break;
 
@@ -125,7 +128,7 @@ static uint8_t yearup(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 		break;
 
 	case 400 ... 599:
-		/*日付と時刻に移動*/
+		//日付と時刻に移動
 		if (count % 50 < 25)
 			ReportData->HAT = HAT_BOTTOM;
 		break;
@@ -136,7 +139,7 @@ static uint8_t yearup(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 		break;
 
 	case 650 ... 699:
-		/*日付と本体設定に移動*/
+		//日付と本体設定に移動
 		ReportData->LY = STICK_MIN;
 		break;
 
@@ -145,7 +148,7 @@ static uint8_t yearup(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 			ReportData->Button |= SWITCH_A;
 		break;
 
-	/*一年進める*/
+	//一年進める
 
 	case 750 ... 799:
 		if (count % 50 < 25)
@@ -166,7 +169,7 @@ static uint8_t yearup(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 	}
 	return 0;
 }
-
+*/
 
 void GetMal_Module(USB_JoystickReport_Input_t* const ReportData)
 {
@@ -177,6 +180,7 @@ void GetMal_Module(USB_JoystickReport_Input_t* const ReportData)
 			duration_count = 0;
 		}
 		break;
+	/*
 	case GETING_MAL:
 		if (getmal(ReportData, duration_count)) {
 			state = YEAR_UP;
@@ -189,6 +193,7 @@ void GetMal_Module(USB_JoystickReport_Input_t* const ReportData)
 			duration_count = 0;
 		}
 		break;
+	*/
 	case DONE:
 		break;
 	}
