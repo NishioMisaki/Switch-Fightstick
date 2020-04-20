@@ -176,7 +176,7 @@ void GetMal_Module(USB_JoystickReport_Input_t* const ReportData)
 	switch (state) {
 	case OPEN_ATUMORI:
 		if (openatumori(ReportData, duration_count)) {
-			state = GETING_MAL;
+			state = DONE;
 			duration_count = 0;
 		}
 		break;
