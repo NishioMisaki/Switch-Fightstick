@@ -168,7 +168,7 @@ static uint8_t yearup(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 }
 
 
-void GETMAL_Module(USB_JoystickReport_Input_t* const ReportData)
+void GetMal_Module(USB_JoystickReport_Input_t* const ReportData)
 {
 	switch (state) {
 	case OPEN_ATUMORI:
