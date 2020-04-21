@@ -2,39 +2,52 @@
 #include "Modules.h"
 
 typedef enum {
-	//OPEN_ATUMORI,
-	GETING_MAL,
+	OPEN_ATUMORI,
+	//GETING_MAL,
 	//YEAR_UP,
 	DONE,
 } State_t;
 
 static State_t state = GETING_MAL;
 static uint16_t duration_count = 0;
-/*
+
 static uint8_t openatumori(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
 	switch (count) {
+	casa 0 ... 49:
+		//SWITCHのホーム画面に行く(49)
+		if ( count % 50 < 25)
+			ReportData->Button |= SWITCH_HOME;
+		break;
+	case 50 .... 99:
+　　　　　　　　　//設定まで移動(49)
+	 	ReportData->HAT = HAT_BUTTON_RIGHT;
+		break;
+	/* あつ森を起動する
 	case 0 ... 49:
-		//メニュー画面に行く
+		//SWITCHのホーム画面に行く(49)
 		if (count % 50 < 25)
 			ReportData->Button |= SWITCH_HOME;
 		break;
 	case 50 ... 99:
-		//あつもりまでいく
+		//あつ森の起動場所までいく(49)
 		ReportData->HAT = HAT_TOP_LEFT;
 		break;
 	case 100 ... 6349:
-		//あつもりを開く
+		//あつ森を起動(50S)
 		if (count % 50 < 25)
 			ReportData->Button |= SWITCH_A;
 		break;
 	case 6350:
+		return 1;*/
+	case 100:
 		return 1;
+			
 	}
 	return 0;
 }
-*/
 
+/*
 static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
 	
@@ -89,7 +102,7 @@ static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 	}
 	return 0;
 }
-
+*/
 /*
 static uint8_t yearup(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
@@ -166,8 +179,8 @@ static uint8_t yearup(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 void GetMal_Module(USB_JoystickReport_Input_t* const ReportData)
 {
 	switch (state) {
-	case GETING_MAL:
-		if (getmal(ReportData, duration_count)) {
+	case OPEN_ATUMORI:
+		if (openatumori(ReportData, duration_count)) {
 			state = DONE;
 			duration_count = 0;
 		}
