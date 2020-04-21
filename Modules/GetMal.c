@@ -21,7 +21,6 @@ static uint8_t openatumori_up(USB_JoystickReport_Input_t* const ReportData, uint
 		break;	
 	case 50 ... 99 :
 		//設定まで移動下(49)
-		//
 	 	ReportData->HAT = HAT_BOTTOM;
 		break;
 	case 100 ... 158:
