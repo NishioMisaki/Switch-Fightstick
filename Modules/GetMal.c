@@ -159,21 +159,21 @@ static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_B;
 		break;
-	case 3497 ... 3546:
+	case 3597 ... 3646:
 		//-をおしてセーブする(49)
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_SELECT;
 		break;
-	case 3547 ... 5172:
+	case 3647 ... 5272:
 		//マイナスをおしてから文字が読み終わるまで(13s=1625)
 		ReportData->Button |= SWITCH_R; 
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A | SWITCH_R;
 		break;
-	case 5173 ... 7173:
-		//待ち時間(ホームへ行く)
+	case 5273 ... 7273:
+		//待ち時間(ホームへ行く)(16S=2000)
 		break;
-	case 7174:
+	case 7274:
 		return 1;
 	}
 	return 0;
@@ -182,12 +182,14 @@ static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 void GetMal_Module(USB_JoystickReport_Input_t* const ReportData)
 {
 	switch (state) {
+	
 	case OPEN_ATUMORI:
 		if (openatumori_up(ReportData, duration_count)) {
 			state = GETING_MAL;
 			duration_count = 0;
 		}
 		break;
+
 	case GETING_MAL:
 		if (getmal(ReportData, duration_count)) {
 			state = DONE;
