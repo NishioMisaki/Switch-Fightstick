@@ -160,7 +160,7 @@ static uint8_t openatumori_down(USB_JoystickReport_Input_t* const ReportData, ui
 	case 731 ... 780:
 		//時間を戻す(49)
 		if ( count % 50 < 25 )
-			ReportData->HAT = HAT_DOWN;
+			ReportData->HAT = HAT_BOTTOM;
 		break;
 	case 781 ... 830:
 		//分まで移動(49)
@@ -170,7 +170,7 @@ static uint8_t openatumori_down(USB_JoystickReport_Input_t* const ReportData, ui
 	case 831 ... 880:
 		//時間を戻す(49)
 		if ( count % 50 < 25 )
-			ReportData->HAT = HAT_DOWN;
+			ReportData->HAT = HAT_BOTTOM;
 		break;
 	case 881 ... 930:
 		//決定まで移動(49)
@@ -182,17 +182,17 @@ static uint8_t openatumori_down(USB_JoystickReport_Input_t* const ReportData, ui
 			ReportData->Button |= SWITCH_A;
 		break;
 	//セーブをする
-	case 891 ... 891+49:
+	case 981 ... 981+49:
 		//マイナスおす(49)
 		if ( count % 50 < 25)
 			ReportData->Button |= SWITCH_SELECT;
 		break;
-	case 891+50 ... 891+6925:
-		//Aボタン(55S=687)ロード時間
+	case 981+50 ... 981+6925:
+		//Aボタン(55S=6875)ロード時間
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
-	case 891+6926:
+	case 981+6926:
 		return 1;
 	}
 	return 0;
