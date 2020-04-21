@@ -2,16 +2,16 @@
 #include "Modules.h"
 
 typedef enum {
-	//OPEN_ATUMORI_UP,
-	//GETING_MAL,
+	OPEN_ATUMORI_UP,
+	GETING_MAL,
 	OPEN_ATUMORI_DOWN,
 	DONE,
 } State_t;
 
-static State_t state = OPEN_ATUMORI_DOWN;
+static State_t state = OPEN_ATUMORI_UP;
 static uint16_t duration_count = 0;
 
-/*
+
 static uint8_t openatumori_up(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
 	switch (count) {		
@@ -107,7 +107,8 @@ static uint8_t openatumori_up(USB_JoystickReport_Input_t* const ReportData, uint
 	}
 	return 0;
 }
-*/
+
+
 static uint8_t openatumori_down(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
 	switch (count) {		
@@ -167,48 +168,47 @@ static uint8_t openatumori_down(USB_JoystickReport_Input_t* const ReportData, ui
 		if( count % 50 < 25 )
 			ReportData->HAT = HAT_RIGHT;
 		break;
-	case 831 ... 880:
+	case 831 ... 880+3:
 		//時間を戻す(49)
 		if ( count % 50 < 25 )
 			ReportData->HAT = HAT_BOTTOM;
 		break;
-	case 881 ... 930:
+	case 881+3 ... 930+3:
 		//決定まで移動(49)
 		ReportData->HAT = HAT_RIGHT;
 		break;
-	case 931 ... 980:
+	case 931+3 ... 980+3:
 		//決定をAボタンでおす(49)
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
-	case 981 ... 1030:
+	case 981+3 ... 1030+3:
 		//HOMEにいく(49)
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_HOME;
 		break;
-	case 1031 ... 1080:
-		//Aボタン
+	case 1031+3 ... 3781+3:
+		//Aボタン(125*22)
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
 	//セーブをする
-	case 1081 ... 1081+49:
+	case 3782+3 ... 3782+3+49:
 		//マイナスおす(49)
 		if ( count % 50 < 25)
 			ReportData->Button |= SWITCH_SELECT;
 		break;
-	case 1081+50 ... 1081+6925:
-		//Aボタン(55S=6875)ロード時間
+	case 3782+3+50 ... 3782+3+7550:
+		//Aボタン(60S=6875)ロード時間
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
-	case 1081+6926:
+	case 3782+3+7551:
 		return 1;
 	}
 	return 0;
 }
 
-/*
 static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
 	
@@ -272,12 +272,11 @@ static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 	}
 	return 0;
 }
-*/
 
 void GetMal_Module(USB_JoystickReport_Input_t* const ReportData)
 {
 	switch (state) {
-	/*
+
 	case OPEN_ATUMORI_UP:
 		if (openatumori_up(ReportData, duration_count)) {
 			state = GETING_MAL;
@@ -287,19 +286,16 @@ void GetMal_Module(USB_JoystickReport_Input_t* const ReportData)
 
 	case GETING_MAL:
 		if (getmal(ReportData, duration_count)) {
-			state = DONE;
+			state = OPEN_ATUMORI_DOWN;
 			duration_count = 0;
 		}
 		break;
-	*/
+
 	case OPEN_ATUMORI_DOWN:
 		if (openatumori_down(ReportData, duration_count)) {
-			state = DONE;
+			state = OPEN_ATUMORI_UP;
 			duration_count = 0;
 		}
-		break;
-			
-	case DONE:
 		break;
 	}
 	duration_count++;
