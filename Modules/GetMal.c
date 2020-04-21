@@ -8,40 +8,103 @@ typedef enum {
 	DONE,
 } State_t;
 
-static State_t state = GETING_MAL;
+static State_t state = OPEN_ATUMORI;
 static uint16_t duration_count = 0;
 
 static uint8_t openatumori(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
-	switch (count) {
-	casa 0 ... 49:
+	switch (count) {		
+	case 0 ... 49:
 		//SWITCHのホーム画面に行く(49)
 		if ( count % 50 < 25)
 			ReportData->Button |= SWITCH_HOME;
+		break;	
+	case 50 ... 99 :
+		//設定まで移動下(49)
+		//
+	 	ReportData->HAT = HAT_BOTTOM;
 		break;
-	case 50 .... 99:
-　　　　　　　　　//設定まで移動(49)
-	 	ReportData->HAT = HAT_BUTTON_RIGHT;
+	case 100 ... 158:
+		//設定まで移動右(48+10)
+		ReportData->HAT = HAT_RIGHT;
 		break;
-	/* あつ森を起動する
-	case 0 ... 49:
+	case 159 ... 207:
+		//Aボタン(49)
+		if( count % 50 < 25 )
+			ReportData->Button |= SWITCH_A;
+		break;
+	case 208 ...413:
+		//本体設定まで移動(125+80)
+		ReportData->LY = STICK_MAX;
+		break;
+	case 414 ... 463:
+		//Aボタン(49)
+		ReportData->Button |= SWITCH_A;
+		break;
+	case 464 ... 533:
+		//日付と時刻まで移動(70)
+		ReportData->LY = STICK_MAX;
+		break;
+	case 534 ... 583:
+		//Aボタン
+		ReportData->Button |= SWITCH_A;
+		break;
+	case 584 ... 629:
+		//現在の日付と時刻(40+5)
+		ReportData->LY = STICK_MAX;
+		break;
+	case 630 ... 679:
+		//Aボタン
+		ReportData->Button |= SWITCH_A;
+		break;
+	case 680 ... 730:
+		//時まで移動(49+1)
+		ReportData->HAT = HAT_RIGHT;
+		break;
+	case 731 ... 780:
+		//時間を進める(49)
+		if ( count % 50 < 25 )
+			ReportData->HAT = HAT_TOP;
+		break;
+	case 781 ... 830:
+		//決定まで移動(49)
+		ReportData->HAT = HAT_RIGHT;
+		break;
+	case 831 ... 880:
+		//決定をAボタンでおす
+		if ( count % 50 < 25 )
+			ReportData->Button |= SWITCH_A;
+		break;
+	//あつ森起動	
+	case 0+881 ... 49+881:
 		//SWITCHのホーム画面に行く(49)
 		if (count % 50 < 25)
 			ReportData->Button |= SWITCH_HOME;
 		break;
-	case 50 ... 99:
+	case 50+881 ... 99+881:
 		//あつ森の起動場所までいく(49)
 		ReportData->HAT = HAT_TOP_LEFT;
 		break;
-	case 100 ... 6349:
+	case 100+881 ... 6349+881:
 		//あつ森を起動(50S)
 		if (count % 50 < 25)
 			ReportData->Button |= SWITCH_A;
 		break;
-	case 6350:
-		return 1;*/
-	case 100:
+	//セーブをする
+	case 6350+881 ... 6350+881+59:
+		//マイナスおす(59)
+		if ( count % 50 < 25)
+			ReportData->Button |= SWITCH_SELECT;
+		break;
+	case 6350+881+60 ... 6350+881+185:
+		//R+Aボタン(125)
+		ReportData->Button |= SWITCH_R;
+		if ( count % 50 < 25 )
+			ReportData->Button |= SWITCH_A | SWITCH_R;
+		breaki;
+	case 6350+881+186:
 		return 1;
+
 			
 	}
 	return 0;
