@@ -159,7 +159,7 @@ static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_B;
 		break;
-	case 3497 ...3546:
+	case 3497 ... 3546:
 		//-をおしてセーブする(49)
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_SELECT;
