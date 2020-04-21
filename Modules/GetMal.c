@@ -182,7 +182,7 @@ static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 void GetMal_Module(USB_JoystickReport_Input_t* const ReportData)
 {
 	switch (state) {
-	case OPEN_ATUMORI_UP:
+	case OPEN_ATUMORI:
 		if (openatumori_up(ReportData, duration_count)) {
 			state = GETING_MAL;
 			duration_count = 0;
