@@ -3,15 +3,15 @@
 
 typedef enum {
 	OPEN_ATUMORI,
-	//GETING_MAL,
-	//YEAR_UP,
+	GETING_MAL,
 	DONE,
 } State_t;
 
 static State_t state = OPEN_ATUMORI;
+//static int flag = 1; // 1:yearup, 0:yeardown
 static uint16_t duration_count = 0;
 
-static uint8_t openatumori(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
+static uint8_t openatumori_up(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
 	switch (count) {		
 	case 0 ... 49:
@@ -97,7 +97,7 @@ static uint8_t openatumori(USB_JoystickReport_Input_t* const ReportData, uint16_
 			ReportData->Button |= SWITCH_SELECT;
 		break;
 	case 210+881+50 ... 335+881+10000:
-		//R+Aボタン(80S=8750)しずえさんの会話が終わるまで
+		//R+Aボタン(80S=8750)-を押した後、しずえさんの会話が終わるまで
 		ReportData->Button |= SWITCH_R;
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A | SWITCH_R;
@@ -115,7 +115,6 @@ static uint8_t openatumori(USB_JoystickReport_Input_t* const ReportData, uint16_
 	return 0;
 }
 
-/*
 static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
 {
 	
@@ -161,112 +160,40 @@ static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 			ReportData->Button |= SWITCH_B;
 		break;
 	case 3497 ...3546:
-		//-をおしてセーブする
+		//-をおしてセーブする(49)
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_SELECT;
 		break;
-	case 3547:
+	case 3547 ... 5172:
+		//マイナスをおしてから文字が読み終わるまで(13s=1625)
+		ReportData->Button |= SWITCH_R; 
+		if ( count % 50 < 25 )
+			ReportData->Button |= SWITCH_A | SWITCH_R;
+		break;
+	case 5173 ... 7173:
+		//待ち時間(ホームへ行く)
+		break;
+	case 7174:
 		return 1;
 	}
 	return 0;
 }
-*/
-/*
-static uint8_t yearup(USB_JoystickReport_Input_t* const ReportData, uint16_t count)
-{
-	switch (count) {
-	//設定まで移動
-	case 0 ... 49:
-		if (count % 50 < 25)
-			ReportData->HAT = HAT_BOTTOM;
-		break;
-	case 50 ... 199:
-		if (count % 50 < 25)
-			ReportData->HAT = HAT_LEFT;
-		break;
-
-	case  200 ... 249:
-		if (count % 50 < 25)
-			ReportData->Button |= SWITCH_A;
-		break;
-
-	case 250 ... 349:
-		//本体設定まで移動
-		ReportData->LY = STICK_MIN;
-		break;
-
-	case 350 ...399:
-		if (count % 50 < 25)
-			ReportData->Button |= SWITCH_A;
-		break;
-
-	case 400 ... 599:
-		//日付と時刻に移動
-		if (count % 50 < 25)
-			ReportData->HAT = HAT_BOTTOM;
-		break;
-
-	case 600 ... 649:
-		if (count % 50 < 25)
-			ReportData->Button |= SWITCH_A;
-		break;
-
-	case 650 ... 699:
-		//日付と本体設定に移動
-		ReportData->LY = STICK_MIN;
-		break;
-
-	case 700 ... 749:
-		if (count % 50 < 25)
-			ReportData->Button |= SWITCH_A;
-		break;
-
-	//一年進める
-
-	case 750 ... 799:
-		if (count % 50 < 25)
-			ReportData->HAT = HAT_TOP;
-		break;
-
-	case 800 ... 849:
-		ReportData->LX = STICK_MAX;
-		break;
-
-	case 850 ... 899:
-		if (count % 50 < 25)
-			ReportData->Button |= SWITCH_A;
-		break;
-	
-	case 900:
-		return 1;
-	}
-	return 0;
-}
-*/
 
 void GetMal_Module(USB_JoystickReport_Input_t* const ReportData)
 {
 	switch (state) {
-	case OPEN_ATUMORI:
-		if (openatumori(ReportData, duration_count)) {
-			state = DONE;
+	case OPEN_ATUMORI_UP:
+		if (openatumori_up(ReportData, duration_count)) {
+			state = GETING_MAL;
 			duration_count = 0;
 		}
 		break;
-	/*
 	case GETING_MAL:
 		if (getmal(ReportData, duration_count)) {
-			state = YEAR_UP;
-			duration_count = 0;
-		}
-		break;
-	case YEAR_UP:
-		if (yearup(ReportData, duration_count)) {
 			state = DONE;
 			duration_count = 0;
 		}
 		break;
-	*/
 	case DONE:
 		break;
 	}
