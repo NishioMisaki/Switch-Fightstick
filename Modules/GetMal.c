@@ -96,13 +96,13 @@ static uint8_t openatumori(USB_JoystickReport_Input_t* const ReportData, uint16_
 		if ( count % 50 < 25)
 			ReportData->Button |= SWITCH_SELECT;
 		break;
-	case 210+881+50 ... 335+881+7550:
-		//R+Aボタン(60S=7500)
+	case 210+881+50 ... 335+881+10000:
+		//R+Aボタン(80S=8750)しずえさんの会話が終わるまで
 		ReportData->Button |= SWITCH_R;
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A | SWITCH_R;
 		break;
-	case 335+881+7550:
+	case 335+881+10001:
 		return 1;		
 	/*case 100+881 ... 6349+881:
 		//あつ森を起動(50S=6349)
