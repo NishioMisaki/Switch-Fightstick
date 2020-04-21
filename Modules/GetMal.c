@@ -85,25 +85,30 @@ static uint8_t openatumori(USB_JoystickReport_Input_t* const ReportData, uint16_
 		//あつ森の起動場所までいく(49)
 		ReportData->HAT = HAT_TOP_LEFT;
 		break;
-	case 100+881 ... 6349+881:
-		//あつ森を起動(50S)
+	case 100+881 ... 149+881:
+		//Aボタン(あつ森の画面へ)(49)
 		if (count % 50 < 25)
 			ReportData->Button |= SWITCH_A;
-		break;
+		break;	
 	//セーブをする
-	case 6350+881 ... 6350+881+59:
-		//マイナスおす(59)
+	case 150+881 ... 209+881+49:
+		//マイナスおす(49)
 		if ( count % 50 < 25)
 			ReportData->Button |= SWITCH_SELECT;
 		break;
-	case 6350+881+60 ... 6350+881+185:
-		//R+Aボタン(125)
+	case 210+881+50 ... 335+881+7550:
+		//R+Aボタン(60S=7500)
 		ReportData->Button |= SWITCH_R;
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A | SWITCH_R;
-		breaki;
-	case 6350+881+186:
-		return 1;
+		break;
+	case 335+881+7550:
+		return 1;		
+	/*case 100+881 ... 6349+881:
+		//あつ森を起動(50S=6349)
+		if (count % 50 < 25)
+			ReportData->Button |= SWITCH_A;
+		break;*/
 
 			
 	}
