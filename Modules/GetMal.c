@@ -20,89 +20,89 @@ static uint8_t openatumori_up(USB_JoystickReport_Input_t* const ReportData, uint
 		if ( count % 50 < 25)
 			ReportData->Button |= SWITCH_HOME;
 		break;	
-	case 50 ... 99 :
-		//設定まで移動下(49)
+	case 50 ... 100:
+		//設定まで移動下(50)
 	 	ReportData->HAT = HAT_BOTTOM;
 		break;
-	case 100 ... 158:
+	case 101 ... 159:
 		//設定まで移動右(48+10)
 		ReportData->HAT = HAT_RIGHT;
 		break;
-	case 159 ... 207:
+	case 160 ... 208:
 		//Aボタン(49)
 		if( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
-	case 208 ...413:
+	case 209 ...414:
 		//本体設定まで移動(125+80)
 		ReportData->LY = STICK_MAX;
 		break;
-	case 414 ... 463:
+	case 415 ... 464:
 		//Aボタン(49)
 		ReportData->Button |= SWITCH_A;
 		break;
-	case 464 ... 533:
+	case 465 ... 534:
 		//日付と時刻まで移動(70)
 		ReportData->LY = STICK_MAX;
 		break;
-	case 534 ... 583:
+	case 535 ... 584:
 		//Aボタン
 		ReportData->Button |= SWITCH_A;
 		break;
-	case 584 ... 629:
+	case 585 ... 630:
 		//現在の日付と時刻(40+5)
 		ReportData->LY = STICK_MAX;
 		break;
-	case 630 ... 679:
+	case 631 ... 680:
 		//Aボタン
 		ReportData->Button |= SWITCH_A;
 		break;
-	case 680 ... 730:
+	case 681 ... 731:
 		//時まで移動(49+1)
 		ReportData->HAT = HAT_RIGHT;
 		break;
-	case 731 ... 780:
+	case 732 ... 781:
 		//時間を進める(49)
 		if ( count % 50 < 25 )
 			ReportData->HAT = HAT_TOP;
 		break;
-	case 781 ... 830:
+	case 782 ... 831:
 		//決定まで移動(49)
 		ReportData->HAT = HAT_RIGHT;
 		break;
-	case 831 ... 880:
+	case 832 ... 881:
 		//決定をAボタンでおす
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
 	//あつ森起動	
-	case 0+881 ... 49+881:
+	case 0+882 ... 49+882:
 		//SWITCHのホーム画面に行く(49)
 		if (count % 50 < 25)
 			ReportData->Button |= SWITCH_HOME;
 		break;
-	case 50+881 ... 99+881:
+	case 50+882 ... 99+882:
 		//あつ森の起動場所までいく(49)
 		ReportData->HAT = HAT_TOP_LEFT;
 		break;
-	case 100+881 ... 149+881:
+	case 100+882 ... 149+882:
 		//Aボタン(あつ森の画面へ)(49)
 		if (count % 50 < 25)
 			ReportData->Button |= SWITCH_A;
 		break;	
 	//セーブをする
-	case 150+881 ... 209+881+49:
+	case 150+882 ... 209+882+49:
 		//マイナスおす(49)
 		if ( count % 50 < 25)
 			ReportData->Button |= SWITCH_SELECT;
 		break;
-	case 210+881+50 ... 335+881+10000:
-		//R+Aボタン(80S=8750)-を押した後、しずえさんの会話が終わるまで
+	case 210+882+50 ... 335+882+10000+125:
+		//R+Aボタン(80+1S=8750+125)-を押した後、しずえさんの会話が終わるまで
 		ReportData->Button |= SWITCH_R;
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A | SWITCH_R;
 		break;
-	case 335+881+10001:
+	case 335+882+10001+125:
 		return 1;		
 	}
 	return 0;
@@ -168,42 +168,42 @@ static uint8_t openatumori_down(USB_JoystickReport_Input_t* const ReportData, ui
 		if( count % 50 < 25 )
 			ReportData->HAT = HAT_RIGHT;
 		break;
-	case 831 ... 880+3:
-		//時間を戻す(49)
+	case 831 ... 880+80:
+		//時間を戻す(49+80)
 		if ( count % 50 < 25 )
 			ReportData->HAT = HAT_BOTTOM;
 		break;
-	case 881+3 ... 930+3:
+	case 881+80 ... 930+80:
 		//決定まで移動(49)
 		ReportData->HAT = HAT_RIGHT;
 		break;
-	case 931+3 ... 980+3:
+	case 931+80 ... 980+80:
 		//決定をAボタンでおす(49)
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
-	case 981+3 ... 1030+3:
+	case 981+80 ... 1030+80:
 		//HOMEにいく(49)
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_HOME;
 		break;
-	case 1031+3 ... 3781+3:
+	case 1031+80 ... 3781+80:
 		//Aボタン(125*22)
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
 	//セーブをする
-	case 3782+3 ... 3782+3+49:
+	case 3782+80 ... 3782+80+49:
 		//マイナスおす(49)
 		if ( count % 50 < 25)
 			ReportData->Button |= SWITCH_SELECT;
 		break;
-	case 3782+3+50 ... 3782+3+7550:
+	case 3782+80+50 ... 3782+80+7550:
 		//Aボタン(60S=6875)ロード時間
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
-	case 3782+3+7551:
+	case 3782+80+7551:
 		return 1;
 	}
 	return 0;
