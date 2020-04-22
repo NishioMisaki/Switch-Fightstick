@@ -96,13 +96,13 @@ static uint8_t openatumori_up(USB_JoystickReport_Input_t* const ReportData, uint
 		if ( count % 50 < 25)
 			ReportData->Button |= SWITCH_SELECT;
 		break;
-	case 210+882+50 ... 335+882+10000+125:
-		//R+Aボタン(80+1S=8750+125)-を押した後、しずえさんの会話が終わるまで
+	case 210+882+50 ... 335+882+10000+200:
+		//R+Aボタン(80+1S=8750+200)-を押した後、しずえさんの会話が終わるまで
 		ReportData->Button |= SWITCH_R;
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A | SWITCH_R;
 		break;
-	case 335+882+10001+125:
+	case 335+882+10001+200:
 		return 1;		
 	}
 	return 0;
@@ -117,93 +117,93 @@ static uint8_t openatumori_down(USB_JoystickReport_Input_t* const ReportData, ui
 		if ( count % 50 < 25)
 			ReportData->Button |= SWITCH_HOME;
 		break;	
-	case 50 ... 99 :
-		//設定まで移動下(49)
+	case 50 ... 100 :
+		//設定まで移動下(50)
 	 	ReportData->HAT = HAT_BOTTOM;
 		break;
-	case 100 ... 158:
+	case 101 ... 159:
 		//設定まで移動右(48+10)
 		ReportData->HAT = HAT_RIGHT;
 		break;
-	case 159 ... 207:
+	case 160 ... 208:
 		//Aボタン(49)
 		if( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
-	case 208 ...413:
+	case 209 ...414:
 		//本体設定まで移動(125+80)
 		ReportData->LY = STICK_MAX;
 		break;
-	case 414 ... 463:
+	case 415 ... 464:
 		//Aボタン(49)
 		ReportData->Button |= SWITCH_A;
 		break;
-	case 464 ... 533:
+	case 465 ... 534:
 		//日付と時刻まで移動(70)
 		ReportData->LY = STICK_MAX;
 		break;
-	case 534 ... 583:
+	case 535 ... 584:
 		//Aボタン
 		ReportData->Button |= SWITCH_A;
 		break;
-	case 584 ... 629:
+	case 585 ... 630:
 		//現在の日付と時刻(40+5)
 		ReportData->LY = STICK_MAX;
 		break;
-	case 630 ... 679:
+	case 631 ... 680:
 		//Aボタン
 		ReportData->Button |= SWITCH_A;
 		break;
-	case 680 ... 730:
+	case 681 ... 731:
 		//時まで移動(49+1)
 		ReportData->HAT = HAT_RIGHT;
 		break;
-	case 731 ... 780:
+	case 732 ... 781:
 		//時間を戻す(49)
 		if ( count % 50 < 25 )
 			ReportData->HAT = HAT_BOTTOM;
 		break;
-	case 781 ... 830:
+	case 782 ... 831:
 		//分まで移動(49)
 		if( count % 50 < 25 )
 			ReportData->HAT = HAT_RIGHT;
 		break;
-	case 831 ... 880+80:
+	case 832 ... 881+80:
 		//時間を戻す(49+80)
 		if ( count % 50 < 25 )
 			ReportData->HAT = HAT_BOTTOM;
 		break;
-	case 881+80 ... 930+80:
+	case 882+80 ... 931+80:
 		//決定まで移動(49)
 		ReportData->HAT = HAT_RIGHT;
 		break;
-	case 931+80 ... 980+80:
+	case 932+80 ... 981+80:
 		//決定をAボタンでおす(49)
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
-	case 981+80 ... 1030+80:
+	case 982+80 ... 1031+80:
 		//HOMEにいく(49)
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_HOME;
 		break;
-	case 1031+80 ... 3781+80:
+	case 1032+80 ... 3782+80:
 		//Aボタン(125*22)
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
 	//セーブをする
-	case 3782+80 ... 3782+80+49:
+	case 3783+80 ... 3783+80+49:
 		//マイナスおす(49)
 		if ( count % 50 < 25)
 			ReportData->Button |= SWITCH_SELECT;
 		break;
-	case 3782+80+50 ... 3782+80+7550:
+	case 3783+80+50 ... 3783+80+7550:
 		//Aボタン(60S=6875)ロード時間
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
-	case 3782+80+7551:
+	case 3783+80+7551:
 		return 1;
 	}
 	return 0;
@@ -229,42 +229,42 @@ static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
-	case 330 ... 1549:
+	case 330 ... 1549-40:
 		//ロード時間(1219)	
 		break;
-	case 1550 ... 1569:
+	case 1550-40 ... 1569-40:
 		//少し上へ(19)
 		ReportData->LY = STICK_MIN;
 		ReportData->Button |= SWITCH_B;
 		break;
-	case 1570 ... 1695:
+	case 1570-40 ... 1695-40:
 		//右へ(125)
 		ReportData->LX = STICK_MAX;
 		ReportData->Button |= SWITCH_B;
 		break;	
-	case 1696 ... 1745:
+	case 1696-40 ... 1745-40:
 		//ATMに話しかける(49)
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A;
 		break;
-	case 1746 ... 3496:
+	case 1746-40 ... 3496-40:
 		//Bをおす(125*13+49)
 		ReportData->Button |= SWITCH_R;
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_B;
 		break;
-	case 3597 ... 3646:
+	case 3597-40 ... 3646-40:
 		//-をおしてセーブする(49)
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_SELECT;
 		break;
-	case 3647 ... 5272:
+	case 3647-40 ... 5272-40:
 		//マイナスをおしてから文字が読み終わるまで(13s=1625)
 		ReportData->Button |= SWITCH_R; 
 		if ( count % 50 < 25 )
 			ReportData->Button |= SWITCH_A | SWITCH_R;
 		break;
-	case 5273 ... 7273:
+	case 5273-40 ... 7273-40:
 		//待ち時間(ホームへ行く)(16S=2000)
 		break;
 	case 7274:
