@@ -237,7 +237,7 @@ static uint8_t getmal(USB_JoystickReport_Input_t* const ReportData, uint16_t cou
 		ReportData->LY = STICK_MIN;
 		ReportData->Button |= SWITCH_B;
 		break;
-	case 1570-126 ... 1695-125:
+	case 1570-125 ... 1695-125:
 		//右へ(125)
 		ReportData->LX = STICK_MAX;
 		ReportData->Button |= SWITCH_B;
