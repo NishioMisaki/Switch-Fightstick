@@ -48,6 +48,8 @@ void GetNextReport(USB_JoystickReport_Input_t* const ReportData)
 	LoopBattleTower_Module(ReportData);
 #elif defined(GET_MAL)
 	GetMal_Module(ReportData);
+#elif defined(GET_MAL2)
+	GetMal2_Module(ReportData);
 #else
 	HatchEggs_Module(ReportData);
 #endif
