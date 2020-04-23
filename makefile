@@ -61,6 +61,8 @@ repeat-a:
 	$(MAKE) TARGET=RepeatA		APPEND_CC_FLAGS=-DREPEAT_A
 get-mal:
 	$(MAKE) TARGET=GetMal		APPEND_CC_FLAGS=-DGET_MAL
+get-mal2:
+	$(MAKE) TARGET=GetMal2		APPEND_CC_FLAGS=-DGET_MAL2
 
 
 .PHONY: clean
